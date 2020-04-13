@@ -6,38 +6,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name="projects")
-public class Project {
-
+@Entity(name="contacts")
+public class Contact {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "id")
 	private Long id;
 	
-	@Lob
-	@Type(type="org.hibernate.type.BinaryType")
-	@Column(name= "image")
-	private byte[] image;
+	@Column(name= "type")
+	private String type;
 	
-	@Column(name= "title")
-	private String title;
-	
-	@Column(name= "description")
-	private String description;
+	@Column(name= "value")
+	private String value;
 	
 	@ManyToOne(targetEntity=User.class)
 	@JsonIgnore
 	@JoinColumn(name="userId", nullable=false)
 	private User user;
 	
-	Project(){
+	Contact(){
 		
 	}
 
@@ -49,28 +41,20 @@ public class Project {
 		this.id = id;
 	}
 
-	public byte[] getImage() {
-		return image;
+	public String getType() {
+		return type;
 	}
 
-	public void setImage(byte[] image) {
-		this.image = image;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getValue() {
+		return value;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public User getUser() {
