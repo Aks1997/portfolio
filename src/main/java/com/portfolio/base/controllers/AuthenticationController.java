@@ -29,7 +29,7 @@ public class AuthenticationController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	@ResponseBody
-	private ResponseEntity<ResponseData<User>> login(@RequestHeader("Authorization") String auth) {
+	private ResponseEntity<ResponseData<User>> login(@RequestHeader("Auth") String auth) {
 		Map<String, Object> result= userServiceImpl.logInUser(auth);
 		ResponseData<User> response= new ResponseData((User)result.get(CommonConstants.RESULTS), (String)result.get(CommonConstants.MESSAGE),
 				(boolean)result.get(CommonConstants.ERROR));
