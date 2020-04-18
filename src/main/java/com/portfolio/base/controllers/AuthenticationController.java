@@ -29,11 +29,10 @@ public class AuthenticationController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	@ResponseBody
-	private ResponseEntity<ResponseData<User>> login(@RequestHeader("Auth") String auth) {
+	private ResponseEntity<Map<String, Object>> login(@RequestHeader("Auth") String auth) {
 		Map<String, Object> result= userServiceImpl.logInUser(auth);
-		ResponseData<User> response= new ResponseData((User)result.get(CommonConstants.RESULTS), (String)result.get(CommonConstants.MESSAGE),
-				(boolean)result.get(CommonConstants.ERROR));
-		return new ResponseEntity<ResponseData<User>>(response, (HttpStatus)result.get(CommonConstants.STATUS));
+		
+		return new ResponseEntity<Map<String, Object>>(result, (HttpStatus)result.get(CommonConstants.STATUS));
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)

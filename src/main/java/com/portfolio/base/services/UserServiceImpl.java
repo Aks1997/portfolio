@@ -17,6 +17,7 @@ import com.portfolio.base.common.CommonConstants;
 import com.portfolio.base.common.PasswordManager;
 import com.portfolio.base.models.User;
 import com.portfolio.base.repositories.UserRepository;
+import com.portfolio.base.security.JwtManager;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -26,6 +27,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private PasswordManager passwordManager;
+	
+	@Autowired
+	private JwtManager jwtManager;
 	
 	@Override
 	public List<User> getAllUsers() {
@@ -44,10 +48,18 @@ public class UserServiceImpl implements UserService{
 				response.put(CommonConstants.ERROR, true);
 			}
 			else if(passwordManager.compareCredP(credentials[1], user.getPassword())) {
-				response.put(CommonConstants.RESULTS, user);
-				response.put(CommonConstants.MESSAGE, CommonConstants.SUCCESS);
-				response.put(CommonConstants.STATUS, HttpStatus.OK);
-				response.put(CommonConstants.ERROR, false);
+				String accessToken= jwtManager.createJwt(user.getUserName());
+				if(accessToken!=null && !accessToken.equals("")) {
+					response.put(CommonConstants.ACCESS_TOKEN, accessToken);
+					response.put(CommonConstants.USER_NAME, user.getUserName());
+					response.put(CommonConstants.MESSAGE, CommonConstants.SUCCESS);
+					response.put(CommonConstants.STATUS, HttpStatus.OK);
+					response.put(CommonConstants.ERROR, false);
+				}else {
+					response.put(CommonConstants.MESSAGE, CommonConstants.INTERNAL_SERVER_ERROR);
+					response.put(CommonConstants.STATUS, HttpStatus.INTERNAL_SERVER_ERROR);
+					response.put(CommonConstants.ERROR, true);
+				}
 			}
 			else {
 				response.put(CommonConstants.MESSAGE, CommonConstants.INCORRECT_PASSWORD);
