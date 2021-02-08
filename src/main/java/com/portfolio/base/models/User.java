@@ -9,12 +9,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-@Entity(name="users")
+import org.hibernate.annotations.Type;
+
+@Entity
+@Table(name="users")
 public class User {
 	
 	@Id
@@ -43,16 +48,22 @@ public class User {
 	@Column(name="createdOn")
 	private Date createdOn;
 	
-	@Column(name="city")
-	private String city;
+	@Column(name="state")
+	private String state;
+	
+	@Column(name="gender")
+	private String gender;
+	
+	@Column(name= "imagePath")
+	private String imagePath;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Project> projects = null;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Skill> skills = null;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "id")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private Set<Contact> contacts = null;
 	
 	public User() {
@@ -139,11 +150,28 @@ public class User {
 		this.createdOn = createdOn;
 	}
 
-	public String getCity() {
-		return city;
+	public String getState() {
+		return state;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setState(String state) {
+		this.state = state;
 	}
+	
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 }

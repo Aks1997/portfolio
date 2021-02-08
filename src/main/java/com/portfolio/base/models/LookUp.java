@@ -5,35 +5,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-@Table(name="contacts")
-public class Contact {
-	
+@Table(name="lookups")
+public class LookUp {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "id")
 	private Long id;
 	
-	@Column(name= "type")
-	private String type;
+	@Column(name= "attr")
+	private String attr;
 	
 	@Column(name= "value")
 	private String value;
-	
-	@ManyToOne(targetEntity=User.class)
-	@JsonIgnore
-	@JoinColumn(name="userId", nullable=false)
-	private User user;
-	
-	Contact(){
-		
-	}
 
 	public Long getId() {
 		return id;
@@ -41,14 +28,6 @@ public class Contact {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public String getValue() {
@@ -59,11 +38,11 @@ public class Contact {
 		this.value = value;
 	}
 
-	public User getUser() {
-		return user;
+	public String getAttr() {
+		return attr;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setAttr(String attr) {
+		this.attr = attr;
 	}
 }

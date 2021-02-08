@@ -1,5 +1,8 @@
 package com.portfolio.base.models;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,12 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name="projects")
+@Entity
+@Table(name="projects")
 public class Project {
 
 	@Id
@@ -21,10 +26,8 @@ public class Project {
 	@Column(name= "id")
 	private Long id;
 	
-	@Lob
-	@Type(type="org.hibernate.type.BinaryType")
-	@Column(name= "image")
-	private byte[] image;
+	@Column(name= "imagePath")
+	private String[] imagePath;
 	
 	@Column(name= "title")
 	private String title;
@@ -32,12 +35,15 @@ public class Project {
 	@Column(name= "description")
 	private String description;
 	
+	@Column(name= "link")
+	private String link;
+	
 	@ManyToOne(targetEntity=User.class)
 	@JsonIgnore
 	@JoinColumn(name="userId", nullable=false)
 	private User user;
 	
-	Project(){
+	public Project(){
 		
 	}
 
@@ -49,12 +55,12 @@ public class Project {
 		this.id = id;
 	}
 
-	public byte[] getImage() {
-		return image;
+	public String[] getImagePath() {
+		return imagePath;
 	}
 
-	public void setImage(byte[] image) {
-		this.image = image;
+	public void setImagePath(String[] imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public String getTitle() {
@@ -79,5 +85,13 @@ public class Project {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 }
